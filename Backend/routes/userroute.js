@@ -32,11 +32,13 @@ userRoute.post("/register",async(req,res)=>{
 userRoute.post("/login",async(req,res)=>{
     const {email,password}=req.body
     try {
-        const user=await usermodel.find({email})
+        const user=await usermodel.findOne({email})
+        console.log(user)
         if(!user){
             return res.status(400).send({"msg":"User not found please register!!"})
         }
         let decrypt=await bcrypt.compare(password,user.password)
+        
         if(!decrypt){
             return res.status(400).send({"msg":"Incorrect password"})
         }
