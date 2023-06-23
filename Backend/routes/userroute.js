@@ -38,6 +38,7 @@ userRoute.post("/login",async(req,res)=>{
             return res.status(400).send({"msg":"User not found please register!!"})
         }
         let decrypt=await bcrypt.compare(password,user.password)
+        
         if(!decrypt){
             return res.status(400).send({"msg":"Incorrect password"})
         }
