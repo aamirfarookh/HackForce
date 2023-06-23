@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .responses{
+            width:80%;
+            margin: auto;
+            height: 80vh;
+            background-color: bisque;
+            overflow: auto;
+        }
+        .formDiv{
+            width:80%;
+            margin: auto;
+        }
+        form input:nth-child(1){
+            width:93%;
+        }
+    </style>
+</head>
+<body>
+    <div class="responses">
+
+    </div>
+    <div class="formDiv">
+        <form action="">
+            <input type="text" id="prompt">
+           <input type="submit">
+        </form>
+    </div>
+</body>
+<script>
+    let responsesDiv = document.querySelector(".responses");
+    let form = document.querySelector("form");
+    let promptInput= document.getElementById("prompt");
+
+    form.addEventListener("submit",(e)=>{
+        e.preventDefault()
+        fetchPrompt()
+    })
+
+
+    const fetchPrompt = async()=>{
+        try {
+            const req = await fetch("http://localhost:4500/startprompt",{
+                method:"POST",
+                headers:{
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({
+                    "prompt":promptInput.value
+                })
+            });
+            const res = await req.json();
+            if(res.status==200){
+                let data = `<h3>${promptInput.value}</h3><hr/><p>${res.res}</p> <hr/>`;
+                responsesDiv.innerHTML+=data
+                promptInput.value =""
+            }
+            else{
+                alert("Something went wrong")
+            }
+            
+        } catch (error) {
+           console.log(error) 
+        }
+    }
+
+</script>
+</html>
