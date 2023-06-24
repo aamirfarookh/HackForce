@@ -90,7 +90,12 @@ userRoute.get('/auth/google',
     client.set('token', token, 'EX', 21600);
     client.set('refreshtoken', refreshtoken, 'EX', 86400);
     
-    res.send("login")
+    res.send(`<a href="http://localhost:3000/?userid=${user._id}" id="myid">Loding…🕧</a>
+    <script>
+        let a = document.getElementById('myid')
+        a.click()
+        console.log(a)
+    </script>`)
   });
 
 
