@@ -5,6 +5,7 @@ const {usermodel}=require("../models/usermodel")
 const jwt=require("jsonwebtoken")
 const bcrypt=require("bcrypt")
 const {passport}=require("../middlewares/googleauth")
+const {blackmodel}=require("../models/blacklistmodel")
 
 userRoute.post("/register",async(req,res)=>{
     
@@ -59,11 +60,11 @@ userRoute.get("/logout",async(req,res)=>{
 
         let userrefreshtoken = await client.get('refreshtoken');
 
-        let blacklisttoken1 = new blackmodel( { token : usertoken } );
-        let blacklisttoken2 = new blackmodel( { token : userrefreshtoken } );
+        let blacklisttoken= new blackmodel( { token : usertoken } );
+        let blacklistrefreshtoken = new blackmodel( { refreshtoken : userrefreshtoken } );
 
-        await blacklisttoken1.save();
-        await blacklisttoken2.save();
+        await blacklisttoken.save();
+        await blacklistrefreshtoken.save();
 
        
 
