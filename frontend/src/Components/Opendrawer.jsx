@@ -9,10 +9,12 @@ import {
     RadioGroup, Text, Box, Image, Flex, Spacer
 } from '@chakra-ui/react'
 import { Link, useNavigate } from 'react-router-dom'
-import React from 'react'
+import React, { useState } from 'react'
+import LogoutAlert from './LogoutAlert'
 
 function OpenDrawer() {
     const navigate=useNavigate()
+    const [msg,setmsg]=useState("")
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [placement, setPlacement] = React.useState('left')
    
@@ -29,7 +31,11 @@ function OpenDrawer() {
    console.log(res)
    if(res.msg=="Logout successfull"){
       localStorage.clear("token")
-      navigate("/login")
+      alert("Logout succesfull")
+      setTimeout(()=>{
+          navigate("/login")
+      },2000)
+      setmsg(res.msg)
    }
 })
 .catch((err)=>{
@@ -40,6 +46,7 @@ function OpenDrawer() {
 
     return (
         <>
+       
             <RadioGroup defaultValue={placement} onChange={setPlacement}>
                 {/* <Stack direction='row' mb='4'>
             <Radio value='top'>Top</Radio>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Box, Input, Button, Heading } from "@chakra-ui/react"
+import { Box, Input, Button, Heading, Image } from "@chakra-ui/react"
 import {useNavigate} from "react-router-dom"
+import { Link } from 'react-router-dom'
 export default function Signup() {
     const navigate=useNavigate()
     const [name, setname] = useState("")
@@ -25,6 +26,9 @@ export default function Signup() {
         })
         
     }
+
+
+
     return (
         <Box h="100vh" backgroundImage={'https://wallpapercave.com/wp/wp4390828.jpg'} pt='80px'>
 
@@ -62,7 +66,10 @@ export default function Signup() {
                     mb='20px'
                 />
                 <br></br>
-                <Button onClick={handleinput} backgroundColor={'green'} color={'white'} _hover={'none'} w="100%">Signup</Button>
+              <Button  backgroundColor={'green'} color={'white'} _hover={'none'} w="100%">Signup</Button>
+              <Link to="http://localhost:8800/user/auth/google">  <Box  cursor={'pointer'} mt="50px" bg='white' h='40px' w='100%' borderRadius={'10px'}>
+                    <Image w='50%' h='100%' display={'block'} m='auto' src="https://cdn1.harryanddavid.com/wcsstore/HarryAndDavid/images/Auth0/btn_google_signin_light_normal_web@2x.png" ></Image>
+                </Box></Link>
             </Box>
         </Box>
     )
