@@ -3,20 +3,17 @@ const express = require("express");
 const cookie=require("cookie-parser")
 const {connection}=require("./config/db")
 const {userRoute}=require("./routes/userroute")
+
 const app = express();
 app.use(express.json())
 app.use(cookie())
 
-
-const express = require("express");
 require("dotenv").config();
-// const { Configuration, OpenAIApi } = require("openai");
-// const readline = require("readline");
-
-
 
 
 app.use("/user",userRoute)
+
+
 // const { Configuration, OpenAIApi } =require("openai") 
 // const readline = require("readline")
 // const openAi = new OpenAIApi(
@@ -96,7 +93,27 @@ app.use("/user",userRoute)
 
 
 
+app.get("/",(req,res)=>{
+  res.send("homepage")
+})
 
+// app.get('/auth/google',
+//   passport.authenticate('google', { scope: ['profile',"email"] }));
+
+//   app.get('/auth/google/callback', 
+//   passport.authenticate('google', { failureRedirect: '/login',session:false }),
+//   function(req, res) {
+    
+//     // console.log(req.user)
+//     const user=req.user
+//     console.log(user)
+//     let token=jwt.sign({email:user.email,userid:user._id},process.env.secretkey,{expiresIn:"6hr"})
+//         let refreshtoken=jwt.sign({email:user.email,userid:user._id},process.env.refreshsecretkey,{expiresIn:"1d"})
+//     client.set('token', token, 'EX', 21600);
+//     client.set('refreshtoken', refreshtoken, 'EX', 86400);
+    
+//     res.send("login")
+//   });
 
 
 app.listen(process.env.port,async()=>{

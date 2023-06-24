@@ -4,6 +4,7 @@ const userRoute=express.Router()
 const {usermodel}=require("../models/usermodel")
 const jwt=require("jsonwebtoken")
 const bcrypt=require("bcrypt")
+const {passport}=require("../middlewares/googleauth")
 
 userRoute.post("/register",async(req,res)=>{
     
@@ -73,6 +74,23 @@ userRoute.get("/logout",async(req,res)=>{
 })
 
 
+userRoute.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile',"email"] }));
+
+  userRoute.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login',session:false }),
+  function(req, res) {
+    
+    // console.log(req.user)
+    const user=req.user
+    console.log(user)
+    let token=jwt.sign({email:user.email,userid:user._id},process.env.secretkey,{expiresIn:"6hr"})
+        let refreshtoken=jwt.sign({email:user.email,userid:user._id},process.env.refreshsecretkey,{expiresIn:"1d"})
+    client.set('token', token, 'EX', 21600);
+    client.set('refreshtoken', refreshtoken, 'EX', 86400);
+    
+    res.send("login")
+  });
 
 
 
