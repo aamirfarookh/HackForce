@@ -13,8 +13,8 @@ userRoute.post("/register",async(req,res)=>{
     try{
         const userpresent=await usermodel.findOne({email})
         if(userpresent){
-            res.send("User Already Present Please Login")
-        }
+            res.send({"msg":"User Already Present Please Login"})
+        }else
         bcrypt.hash(password,8,async(err, hash)=> {
             if(err) res.send({"msg":"Something went wrong","error":err.message})
             else{

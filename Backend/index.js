@@ -4,7 +4,7 @@ const cookie=require("cookie-parser")
 const {connection}=require("./config/db")
 const {userRoute}=require("./routes/userroute")
 
-const cors=require("cors")
+
 
 const { InterviewModel } = require("./models/interviewModel");
 const { Configuration, OpenAIApi } = require("openai");
